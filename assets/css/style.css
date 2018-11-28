@@ -73,3 +73,8 @@ h1 {
     display: inline-block;
     width: 20%; /* 1/5 = 20% */
 }
+
+.modal-header-adjust {
+    background-image: none;
+    background-color: rgb(217,91,99);
+}

@@ -29,32 +29,37 @@ $("#submit-button").on("click", function (event) {
     var trainTime = moment.unix($("#train-time").val().trim()).format("HH:mm");
     var trainFrequency = $("#frequency").val().trim();
 
-    // Add conditionals to make sure all fields are filled; add conditionals to make sure frequency input is a number; 
+    // Add conditionals to make sure all fields are filled √ ; add conditionals to make sure frequency input is a number; 
+    if ((trainName === "") || (trainDestination === "") || (trainTime === "") || (trainFrequency === "")) {
+        $('#emptyField').modal('show');
+    }
+    else {
 
-    // Create a local "temporary" object for holding train line data
-    var newTrain = {
-        name: trainName,
-        destination: trainDestination,
-        start: trainTime,
-        frequency: trainFrequency
-    };
+        // Create a local "temporary" object for holding train line data
+        var newTrain = {
+            name: trainName,
+            destination: trainDestination,
+            start: trainTime,
+            frequency: trainFrequency
+        };
 
-    // Upload new train line data to the Firebase database - use .push not .set so it doesn't overwrite
-    database.ref().push(newTrain);
+        // Upload new train line data to the Firebase database - use .push not .set so it doesn't overwrite
+        database.ref().push(newTrain);
 
-    // Console log for testing
-    console.log(newTrain.name);
-    console.log(newTrain.destination);
-    console.log(newTrain.start);
-    console.log(newTrain.frequency);
+        // Console log for testing
+        console.log(newTrain.name);
+        console.log(newTrain.destination);
+        console.log(newTrain.start);
+        console.log(newTrain.frequency);
 
-    // alert("Employee successfully added"); Research modals to inform user that the train was added successfully
+        // alert("Employee successfully added"); Research modals to inform user that the train was added successfully
 
-    // Clear all of the input text fields to make ready for another entry
-    $("#train-name").val("");
-    $("#destination").val("");
-    $("#train-time").val("");
-    $("#frequency").val("");
+        // Clear all of the input text fields to make ready for another entry
+        $("#train-name").val("");
+        $("#destination").val("");
+        $("#train-time").val("");
+        $("#frequency").val("");
+    }
 });
 
 // Create Firebase event for adding new train line to the database and a row in the html when a user adds an entry
