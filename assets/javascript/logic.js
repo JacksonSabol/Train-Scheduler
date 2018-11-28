@@ -28,10 +28,15 @@ $("#submit-button").on("click", function (event) {
     // Add moment.js format for military time and add function to check if it's the correct format when inputted
     var trainTime = moment.unix($("#train-time").val().trim()).format("HH:mm");
     var trainFrequency = $("#frequency").val().trim();
+    trainFrequency = parseInt(trainFrequency);
 
-    // Add conditionals to make sure all fields are filled √ ; add conditionals to make sure frequency input is a number; 
+    // Add conditionals to make sure all fields are filled √
     if ((trainName === "") || (trainDestination === "") || (trainTime === "") || (trainFrequency === "")) {
         $('#emptyField').modal('show');
+    }
+    // Add conditional to make sure frequency input is a non-negative number √ 
+    else if ((Number.isInteger(trainFrequency) === false) || (trainFrequency < 1)) {
+        $('#trainFrequencyModal').modal('show');
     }
     else {
 
