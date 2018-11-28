@@ -68,3 +68,8 @@ h1 {
     background-color: rgb(217,91,99);
     border-color: #ffffff;
 }
+
+#train-table th, td {
+    display: inline-block;
+    width: 20%; /* 1/5 = 20% */
+}
