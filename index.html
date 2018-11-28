@@ -46,7 +46,60 @@
                         <h4 class="modal-title">Line Addition Request Denied</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Please input the train frequency as a non-negative number of minutes then re-submit</p>
+                        <p>Please input the train Frequency as a non-negative number of minutes then re-submit</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add modal to 'alert' user if the input for train start time is not written in military time HH:mm -->
+        <div class="modal fade" id="trainTimeModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-adjust">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Line Addition Request Denied</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please input the First Train Time in HH:mm format then re-submit (ex. 06:00, 15:45, etc)</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add modal to 'alert' user if the input for train start time hours and minutes are not integers -->
+        <div class="modal fade" id="trainTimeIntegerModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-adjust">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Line Addition Request Denied</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please input the hours and minutes of the First Train Time as numbers then re-submit (ex.
+                            06:00, 15:45, etc)</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add modal to 'alert' user if the input for train start time hours and minutes are outside valid formatting (24 hour day, 60 minutes to an hour, no negative numbers) -->
+        <div class="modal fade" id="trainTimeFormatModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-adjust">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Line Addition Request Denied</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please input the hours between 00-23 and minutes between 00-59 for the First Train Time then re-submit (ex.
+                            06:00, 15:45, etc)</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

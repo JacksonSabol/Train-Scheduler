@@ -33,6 +33,10 @@ $("#submit-button").on("click", function (event) {
     else if ((Number.isInteger(trainFrequency) === false) || (trainFrequency < 1)) {
         $('#trainFrequencyModal').modal('show');
     }
+    // Add conditional to call function that forces user to input First Train Time in exact military time format
+    else if (timePolice(trainTime) === false) {
+        // timePolice function returns false and shows modal unless time format is perfect
+    }
     else {
 
         // Create a local "temporary" object for holding train line data
@@ -59,6 +63,39 @@ $("#submit-button").on("click", function (event) {
         $("#frequency").val("");
     }
 });
+
+// Add function to force user to input first train time in military time
+function timePolice(whatistime) {
+    // Add conditional to check if user input string is 5 characters in length and check that 3rd character is ":"
+    if ((whatistime.length !== 5) || (whatistime.charAt(2) !== ":")) {
+        // Display modal if user input isn't 4 indices split by a colon i.e. HH:mm
+        $('#trainTimeModal').modal('show');
+        // Return false to if condition in submit-button function 
+        return false;
+    }
+
+    // Save user input into separate variables for hours and minutes
+    var hours = (parseInt(whatistime.slice(0, 2)));
+    var minutes = (parseInt(whatistime.slice(3, 5)));
+
+    // Add condition to check if hours and minutes are integers
+    if ((Number.isInteger(hours) === false) || (Number.isInteger(minutes) === false)) {
+        // Display modal if hours and minutes aren't integers
+        $('#trainTimeIntegerModal').modal('show');
+        // Return false to if condition in submit-button function
+        return false;
+    }
+
+    // Add conditional to check if hours and minutes ranges are valid for time formatting - no negative hours/minutes; no hours more than 24 in a day; no minutes more than 60 in an hour
+    if ((hours < 0 || hours > 23) || (minutes < 0 || minutes > 59)) {
+        // Display modal if conditions aren't met
+        $('#trainTimeFormatModal').modal('show');
+        // Return false to if condition in submit-button function
+        return false;
+    }
+    // Return true to if condition in submit-button only if the input for First Train Time is formatted perfectly
+    return true;
+};
 
 // Create Firebase event for adding new train line to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function (childSnapshot) {
@@ -126,6 +163,6 @@ database.ref().on("child_added", function (childSnapshot) {
     $("#train-table > tbody").append(newTrainRow);
 
     // Handle the errors
-  }, function(errorObject) {
+}, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
