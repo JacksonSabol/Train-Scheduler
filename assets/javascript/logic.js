@@ -26,7 +26,7 @@ $("#submit-button").on("click", function (event) {
     var trainName = $("#train-name").val().trim();
     var trainDestination = $("#destination").val().trim();
     // Add moment.js format for military time and add function to check if it's the correct format when inputted
-    var trainTime = $("#train-time").val().trim();
+    var trainTime = moment.unix($("#train-time").val().trim()).format("HH:mm");
     var trainFrequency = $("#frequency").val().trim();
 
     // Add conditionals to make sure all fields are filled; add conditionals to make sure frequency input is a number; 
@@ -55,4 +55,39 @@ $("#submit-button").on("click", function (event) {
     $("#destination").val("");
     $("#train-time").val("");
     $("#frequency").val("");
+});
+
+// Create Firebase event for adding new train line to the database and a row in the html when a user adds an entry
+database.ref().on("child_added", function (childSnapshot) {
+    console.log(childSnapshot.val());
+
+    // Assign variables to hold the value of the database key/value pairs for each parameter of a train line
+    var trainName = childSnapshot.val().name;
+    var trainDestination = childSnapshot.val().destination;
+    var trainTime = childSnapshot.val().start;
+    var trainFrequency = childSnapshot.val().frequency;
+
+    // Console log for testing
+    console.log(trainName);
+    console.log(trainDestination);
+    console.log(trainTime);
+    console.log(trainFrequency);
+
+    // Add moment.js or simple JS method to format start time to military time
+    var trainStartTime = moment.unix(trainTime).format("HH:mm");
+
+    // Calculate the difference between trainStartTime and current time for 'Next Arrival' and 'Minutes Away'
+
+
+    // Assign a variable to ynamically create a new row
+    var newTrainRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(trainDestination),
+        $("<td>").text(trainFrequency),
+        $("<td>").text(trainStartTime), // Switch to nextArrival when calculation is complete
+        $("<td>").text("Not Available") // Switch to minutesAway when calculation is complete
+    );
+
+    // Append the new row to the table
+    $("#train-table > tbody").append(newTrainRow);
 });
