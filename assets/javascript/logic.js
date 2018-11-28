@@ -50,12 +50,6 @@ $("#submit-button").on("click", function (event) {
         // Upload new train line data to the Firebase database - use .push not .set so it doesn't overwrite
         database.ref().push(newTrain);
 
-        // Console log for testing
-        console.log(newTrain.name);
-        console.log(newTrain.destination);
-        console.log(newTrain.start);
-        console.log(newTrain.frequency);
-
         // Clear all of the input text fields to make ready for another entry
         $("#train-name").val("");
         $("#destination").val("");
@@ -99,16 +93,12 @@ function timePolice(whatistime) {
 
 // Create Firebase event for adding new train line to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function (childSnapshot) {
-    console.log(childSnapshot.val());
 
     // Assign variables to hold the value of the database key/value pairs for each parameter of a train line
     var trainName = childSnapshot.val().name;
     var trainDestination = childSnapshot.val().destination;
     var trainTime = childSnapshot.val().start;
     var trainFrequency = childSnapshot.val().frequency;
-
-    // Add moment.js or simple JS method to format start time to military time
-    // var trainStartTime = moment.unix(trainTime).format("HH:mm");
 
     // Calculate the difference between trainStartTime and current time for 'Next Arrival' and 'Minutes Away'
 
@@ -141,28 +131,22 @@ database.ref().on("child_added", function (childSnapshot) {
         nextTrainTime = currentTime.add(minutesAway, 'minutes');
     }
 
-    // Console log for testing
-    console.log(trainName);
-    console.log(trainDestination);
-    console.log(trainTime);
-    console.log(trainFrequency);
-    console.log(timeDifference);
-    console.log(minutesAway);
-    console.log(nextTrainTime);
-
-    // Assign a variable to ynamically create a new row
+    // Assign a variable to dynamically create a new row
     var newTrainRow = $("<tr>").append(
         $("<td>").text(trainName),
         $("<td>").text(trainDestination),
         $("<td>").text(trainFrequency),
         $("<td>").text(nextTrainTime.format("HH:mm")),
-        $("<td>").text(minutesAway)
+        $("<td>").text(minutesAway + " minutes")
     );
+
+    // Add 'remove' button to newTrainRow
 
     // Append the new row to the table
     $("#train-table > tbody").append(newTrainRow);
 
-    // Handle the errors
-}, function (errorObject) {
-    console.log("Errors handled: " + errorObject.code);
 });
+
+// Add 'remove child' function here
+
+// Add 'update' button or set to automatically update every minute here
