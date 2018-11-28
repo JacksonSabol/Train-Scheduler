@@ -12,6 +12,11 @@ firebase.initializeApp(config);
 // Assign variable to point to Firebase database
 var database = firebase.database();
 
+// Assign variable to hold current time for comparison to train time and frequency to calculate next arrival time and minutes away
+var currentTime = moment().format('LTS');
+// Console log for testing - can't just assign value and have it update continuously
+console.log(currentTime);
+
 // Add event listener for submit button to begin function for adding new train lines
 $("#submit-button").on("click", function (event) {
     // Prevent default action of submitting a form, which is refresh the page
@@ -20,9 +25,11 @@ $("#submit-button").on("click", function (event) {
     // Assign variables to hold the value of the text input fields for each parameter of a train line
     var trainName = $("#train-name").val().trim();
     var trainDestination = $("#destination").val().trim();
-    // Add moment.js format for military time - not currently working, will continue researching docs
-    var trainTime = moment($("#train-time").val().trim(), "HH", "mm").format("X");
+    // Add moment.js format for military time and add function to check if it's the correct format when inputted
+    var trainTime = $("#train-time").val().trim();
     var trainFrequency = $("#frequency").val().trim();
+
+    // Add conditionals to make sure all fields are filled; add conditionals to make sure frequency input is a number; 
 
     // Create a local "temporary" object for holding train line data
     var newTrain = {
@@ -44,8 +51,8 @@ $("#submit-button").on("click", function (event) {
     // alert("Employee successfully added"); Research modals to inform user that the train was added successfully
 
     // Clear all of the input text fields to make ready for another entry
-    $("#employee-name-input").val("");
-    $("#role-input").val("");
-    $("#start-input").val("");
-    $("#rate-input").val("");
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#train-time").val("");
+    $("#frequency").val("");
 });
