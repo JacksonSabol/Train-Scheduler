@@ -1,2 +1,68 @@
 /* CalTrain Red */
 /* rgb(217,91,99) */
+body {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+}
+
+.header {
+    background-color: rgb(217,91,99);
+    line-height: 1.5;
+    display: block;
+    height: 200px;
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    border-radius: 3rem;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";       /* IE 8 */
+    filter: alpha(opacity=90);  /* IE 5-7 */
+    -moz-opacity: 0.90;          /* Netscape */
+    -khtml-opacity: 0.90;        /* Safari 1.x */
+    opacity: 0.90;               /* Good browsers */
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 68px;
+}
+
+.panel-primary {
+    border-color: #ffffff;
+}
+
+.panel {
+    margin-bottom: 21px;
+    background-color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    border-color: rgb(217,91,99);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";       /* IE 8 */
+    filter: alpha(opacity=90);  /* IE 5-7 */
+    -moz-opacity: 0.90;          /* Netscape */
+    -khtml-opacity: 0.90;        /* Safari 1.x */
+    opacity: 0.90;               /* Good browsers */
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 17px;
+}
+
+/* Remove BootStrap background image to let background color show through */
+/* https://stackoverflow.com/a/28387516/10503606 */
+.panel>.panel-heading {
+    color: #ffffff;
+    background-image: none;
+    background-color: rgb(217,91,99);
+    border-color: #ffffff;
+}
