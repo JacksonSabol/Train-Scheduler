@@ -33,6 +33,16 @@ h1 {
     font-size: 68px;
 }
 
+.remove-button {
+    background: none;
+    background-color: rgb(217,91,99);
+    margin-right: 45px;
+}
+
+.remove-button:hover {
+    background-color: rgb(218, 47, 58);
+}
+
 .panel-primary {
     border-color: #ffffff;
 }
@@ -71,7 +81,7 @@ h1 {
 
 #train-table th, td {
     display: inline-block;
-    width: 20%; /* 1/5 = 20% */
+    width: 16.6666666666666666666666%; /* 1/6 = 16.6666666666666666666666% */
 }
 
 .modal-header-adjust {

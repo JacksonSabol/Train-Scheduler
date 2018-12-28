@@ -91,14 +91,14 @@ function timePolice(whatistime) {
     return true;
 };
 
-// Create Firebase event for adding new train line to the database and a row in the html when a user adds an entry
-database.ref().on("child_added", function (childSnapshot) {
-
+// Function to dynamically create and append train line information to the DOM
+function displayTrains (childSnapshot) {
     // Assign variables to hold the value of the database key/value pairs for each parameter of a train line
     var trainName = childSnapshot.val().name;
     var trainDestination = childSnapshot.val().destination;
     var trainTime = childSnapshot.val().start;
     var trainFrequency = childSnapshot.val().frequency;
+    var trainKey = childSnapshot.key;
 
     // Calculate the difference between trainStartTime and current time for 'Next Arrival' and 'Minutes Away'
 
@@ -131,22 +131,47 @@ database.ref().on("child_added", function (childSnapshot) {
         nextTrainTime = currentTime.add(minutesAway, 'minutes');
     }
 
+    // Dynamically generate a 'delete' button for each train line
+    var deleteButton = $("<button>");
+    var removeSpan = $("<span>");
+    deleteButton.addClass("remove-button");
+    deleteButton.attr("data-key", trainKey);
+    removeSpan.addClass("glyphicon glyphicon-remove");
+    deleteButton.append(removeSpan);
+
     // Assign a variable to dynamically create a new row
     var newTrainRow = $("<tr>").append(
         $("<td>").text(trainName),
         $("<td>").text(trainDestination),
         $("<td>").text(trainFrequency),
         $("<td>").text(nextTrainTime.format("HH:mm")),
-        $("<td>").text(minutesAway + " minutes")
+        $("<td>").text(minutesAway + " minutes"),
+        $("<td align='right'>").html(deleteButton)
     );
-
-    // Add 'remove' button to newTrainRow
-
+    // Add an ID of each Firebase entry's key as a unique identifier to allow us to delete train lines
+    newTrainRow.attr("id", trainKey);
+    
     // Append the new row to the table
     $("#train-table > tbody").append(newTrainRow);
+}
 
+// Create Firebase event for adding new train line to the database and a row in the html when a user adds an entry
+database.ref().on("child_added", function (childSnapshot) {
+    // Invoke the displayTrains function and pass it the Firebase childSnapshot
+    displayTrains(childSnapshot);
 });
 
-// Add 'remove child' function here
+// Add 'remove' button functionality to newTrainRow
+$("body").on("click", ".remove-button", function () {
+    // Remove data (child) from firebase associated with this buttons key
+    database.ref().child($(this).attr("data-key")).remove();
+});
+// Create Firebase event for to listen for the deletion of a train line from the database - updates the trains listed accordingly
+database.ref().on("child_removed", function (snapshot) {
+    // Assign a variable to hold the train's unique 'key'
+    var trainKey = snapshot.key;
+    // Remove row with id that matches key of child that was removed
+    $("#" + trainKey).remove();
+});
 
-// Add 'update' button or set to automatically update every minute here
+
